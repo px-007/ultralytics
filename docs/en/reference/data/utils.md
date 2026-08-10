@@ -1,4 +1,5 @@
 ---
+title: data.utils API Reference
 description: Explore in-depth reference for utility functions in Ultralytics data module. Learn about image verification, dataset handling, and more.
 keywords: Ultralytics, dataset utils, data handling, image verification, Python, data module
 ---
@@ -10,10 +11,6 @@ keywords: Ultralytics, dataset utils, data handling, image verification, Python,
     This page is sourced from [https://github.com/ultralytics/ultralytics/blob/main/ultralytics/data/utils.py](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/data/utils.py). Have an improvement or example to add? Open a [Pull Request](https://docs.ultralytics.com/help/contributing) — thank you! 🙏
 
 <br>
-
-## ::: ultralytics.data.utils.HUBDatasetStats
-
-<br><br><hr><br>
 
 ## ::: ultralytics.data.utils.img2label_paths
 
@@ -36,6 +33,10 @@ keywords: Ultralytics, dataset utils, data handling, image verification, Python,
 <br><br><hr><br>
 
 ## ::: ultralytics.data.utils.verify_image
+
+<br><br><hr><br>
+
+## ::: ultralytics.data.utils.verify_image_depth
 
 <br><br><hr><br>
 

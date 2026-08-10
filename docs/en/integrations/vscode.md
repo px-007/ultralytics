@@ -188,12 +188,12 @@ There are over 💯 keyword arguments for all the various Ultralytics [tasks](..
     ```python
     model.predict(
         source=src,  # (str, optional) source directory for images or videos
-        imgsz=640,  # (int | list) input images size as int or list[w,h] for predict
+        imgsz=640,  # (int | list) input images size as int or list[h,w] for predict
         conf=0.25,  # (float) minimum confidence threshold
         iou=0.7,  # (float) intersection over union (IoU) threshold for NMS
         vid_stride=1,  # (int) video frame-rate stride
         stream_buffer=False,  # (bool) buffer incoming frames in a queue (True) or only keep the most recent frame (False)
-        visualize=False,  # (bool) visualize model features
+        visualize=False,  # (bool) save class activation heatmaps
         augment=False,  # (bool) apply image augmentation to prediction sources
         agnostic_nms=False,  # (bool) class-agnostic NMS
         classes=None,  # (int | list[int], optional) filter results by class, i.e. classes=0, or classes=[0,2,3]
@@ -240,7 +240,7 @@ If you use VS Code and have started to see a message prompting you to install th
 
 1. Install Ultralytics-snippets and the message will no longer be shown 😆!
 
-2. You can be using `yolo settings vscode_msg False` to disable the message from showing without having to install the extension. You can learn more about the [Ultralytics Settings](../quickstart.md#ultralytics-settings) on the [quickstart](../quickstart.md) page if you're unfamiliar.
+2. You can use `yolo settings vscode_msg=False` to disable the message from showing without having to install the extension. You can learn more about the [Ultralytics Settings](../quickstart.md#ultralytics-settings) on the [quickstart](../quickstart.md) page if you're unfamiliar.
 
 ### I have an idea for a new Ultralytics code snippet, how can I get one added?
 

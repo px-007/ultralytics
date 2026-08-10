@@ -1,4 +1,5 @@
 ---
+title: Export YOLO26 to TF GraphDef
 comments: true
 description: Learn how to export YOLO26 models to the TF GraphDef format for seamless deployment on various platforms, including mobile and web.
 keywords: YOLO26, export, TensorFlow, GraphDef, model deployment, TensorFlow Serving, TensorFlow Lite, TensorFlow.js, machine learning, AI, computer vision
@@ -44,15 +45,22 @@ Here's how you can deploy with TF GraphDef efficiently across various platforms.
 
 - **TensorFlow Serving:** This framework is designed to deploy TensorFlow models in production environments. TensorFlow Serving offers model management, versioning, and the infrastructure for efficient model serving at scale. It's a seamless way to integrate your GraphDef-based models into production web services or APIs.
 
-- **Mobile and Embedded Devices:** With tools like [TensorFlow Lite](../integrations/tflite.md), you can convert TF GraphDef models into formats optimized for smartphones, tablets, and various embedded devices. Your models can then be used for on-device inference, where execution is done locally, often providing performance gains and offline capabilities.
+- **Mobile and Embedded Devices:** With tools like [LiteRT](https://developers.google.com/edge/litert), you can convert TF GraphDef models into formats optimized for smartphones, tablets, and various embedded devices. Your models can then be used for on-device inference, where execution is done locally, often providing performance gains and offline capabilities.
 
-- **Web Browsers:** [TensorFlow.js](../integrations/tfjs.md) enables the deployment of TF GraphDef models directly within web browsers. It paves the way for real-time object detection applications running on the client side, using the capabilities of YOLO26 through JavaScript.
+- **Web Browsers:** [TensorFlow.js](https://www.tensorflow.org/js) enables the deployment of TF GraphDef models directly within web browsers. It paves the way for real-time object detection applications running on the client side, using the capabilities of YOLO26 through JavaScript.
 
 - **Specialized Hardware:** TF GraphDef's platform-agnostic nature allows it to target custom hardware, such as accelerators and TPUs (Tensor Processing Units). These devices can provide performance advantages for computationally intensive models.
 
+## Supported Tasks
+
+TF GraphDef export supports six of the seven Ultralytics tasks. Semantic segmentation and depth estimation are available only with YOLO26, the only family that ships those heads. Pose models can be exported, but Ultralytics GraphDef inference is not currently supported for them.
+
+{% set unsupported = ["obb"] %}
+{% include "macros/supported-tasks.md" %}
+
 ## Exporting YOLO26 Models to TF GraphDef
 
-You can convert your YOLO26 object detection model to the TF GraphDef format, which is compatible with various systems, to improve its performance across platforms.
+You can convert your YOLO26 model to the TF GraphDef format, which is compatible with various systems, to improve its performance across platforms.
 
 ### Installation
 
@@ -73,7 +81,7 @@ For detailed instructions and best practices related to the installation process
 
 All [Ultralytics YOLO26 models](../models/index.md) are designed to support export out of the box, making it easy to integrate them into your preferred deployment workflow. You can [view the full list of supported export formats and configuration options](../modes/export.md) to choose the best setup for your application.
 
-The TF GraphDef format supports the [Export](../modes/export.md), [Predict](../modes/predict.md), and [Validate](../modes/val.md) modes. Export your model, then load the exported model to run inference or validate its accuracy.
+The TF GraphDef format supports the [Export](../modes/export.md), [Predict](../modes/predict.md), and [Validate](../modes/val.md) modes, except that pose models currently support export only. Export your model, then load the exported model to run inference or validate its accuracy.
 
 !!! example "Export"
 
@@ -140,12 +148,14 @@ The TF GraphDef format supports the [Export](../modes/export.md), [Predict](../m
 
 ### Export Arguments
 
-| Argument | Type             | Default | Description                                                                                                                             |
-| -------- | ---------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `format` | `str`            | `'pb'`  | Target format for the exported model, defining compatibility with various deployment environments.                                      |
-| `imgsz`  | `int` or `tuple` | `640`   | Desired image size for the model input. Can be an integer for square images or a tuple `(height, width)` for specific dimensions.       |
-| `batch`  | `int`            | `1`     | Specifies export model batch inference size or the max number of images the exported model will process concurrently in `predict` mode. |
-| `device` | `str`            | `None`  | Specifies the device for exporting: CPU (`device=cpu`), MPS for Apple silicon (`device=mps`).                                           |
+| Argument   | Type             | Default | Description                                                                                                                             |
+| ---------- | ---------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `format`   | `str`            | `'pb'`  | Target format for the exported model, defining compatibility with various deployment environments.                                      |
+| `imgsz`    | `int` or `tuple` | `640`   | Desired image size for the model input. Can be an integer for square images or a tuple `(height, width)` for specific dimensions.       |
+| `quantize` | `int` or `str`   | `None`  | Fixed FP32 export. GraphDef does not support export-time FP16, INT8, or W8A16 precision conversion.                                     |
+| `opset`    | `int`            | `None`  | Specifies the ONNX opset version for the intermediate ONNX graph. If not set, uses the latest supported version.                        |
+| `batch`    | `int`            | `1`     | Specifies export model batch inference size or the max number of images the exported model will process concurrently in `predict` mode. |
+| `device`   | `str`            | `None`  | Specifies the device for exporting: CPU (`device=cpu`), MPS for Apple silicon (`device=mps`).                                           |
 
 For more details about the export process, visit the [Ultralytics documentation page on exporting](../modes/export.md).
 

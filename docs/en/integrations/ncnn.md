@@ -82,22 +82,15 @@ To use Vulkan acceleration, specify the Vulkan device when running inference:
 
     Ensure you have Vulkan drivers installed for your GPU. Most modern GPU drivers include Vulkan support by default. You can verify Vulkan availability using tools like `vulkaninfo` on Linux or the Vulkan SDK on Windows.
 
+## Supported Tasks
+
+NCNN export supports all seven Ultralytics tasks. Semantic segmentation and depth estimation are available only with YOLO26, the only family that ships those heads.
+
+{% include "macros/supported-tasks.md" %}
+
 ## Export to NCNN: Converting Your YOLO26 Model
 
 You can expand model compatibility and deployment flexibility by converting YOLO26 models to NCNN format.
-
-## Supported Tasks
-
-NCNN export supports the standard Ultralytics YOLO26 task set.
-
-| Task                                                                  | Supported |
-| :-------------------------------------------------------------------- | :-------- |
-| [Object Detection](https://docs.ultralytics.com/tasks/detect/)        | ✅        |
-| [Instance Segmentation](https://docs.ultralytics.com/tasks/segment/)  | ✅        |
-| [Semantic Segmentation](https://docs.ultralytics.com/tasks/semantic/) | ✅        |
-| [Pose Estimation](https://docs.ultralytics.com/tasks/pose/)           | ✅        |
-| [OBB Detection](https://docs.ultralytics.com/tasks/obb/)              | ✅        |
-| [Classification](https://docs.ultralytics.com/tasks/classify/)        | ✅        |
 
 ### Installation
 
@@ -185,13 +178,13 @@ The NCNN format supports the [Export](../modes/export.md), [Predict](../modes/pr
 
 ### Export Arguments
 
-| Argument | Type             | Default  | Description                                                                                                                             |
-| -------- | ---------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `format` | `str`            | `'ncnn'` | Target format for the exported model, defining compatibility with various deployment environments.                                      |
-| `imgsz`  | `int` or `tuple` | `640`    | Desired image size for the model input. Can be an integer for square images or a tuple `(height, width)` for specific dimensions.       |
-| `half`   | `bool`           | `False`  | Enables FP16 (half-precision) quantization, reducing model size and potentially speeding up inference on supported hardware.            |
-| `batch`  | `int`            | `1`      | Specifies export model batch inference size or the max number of images the exported model will process concurrently in `predict` mode. |
-| `device` | `str`            | `None`   | Specifies the device for exporting: GPU (`device=0`), CPU (`device=cpu`), MPS for Apple silicon (`device=mps`).                         |
+| Argument   | Type             | Default  | Description                                                                                                                                 |
+| ---------- | ---------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `format`   | `str`            | `'ncnn'` | Target format for the exported model, defining compatibility with various deployment environments.                                          |
+| `imgsz`    | `int` or `tuple` | `640`    | Desired image size for the model input. Can be an integer for square images or a tuple `(height, width)` for specific dimensions.           |
+| `quantize` | `int` or `str`   | `None`   | Quantization precision: `16` (FP16) reduces model size and can speed up inference; `32`/unset is FP32. Replaces the deprecated `half` flag. |
+| `batch`    | `int`            | `1`      | Specifies export model batch inference size or the max number of images the exported model will process concurrently in `predict` mode.     |
+| `device`   | `str`            | `None`   | Specifies the device for exporting: GPU (`device=0`), CPU (`device=cpu`), MPS for Apple silicon (`device=mps`).                             |
 
 For more details about the export process, visit the [Ultralytics documentation page on exporting](../modes/export.md).
 
